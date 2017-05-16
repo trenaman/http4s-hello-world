@@ -1,0 +1,64 @@
+service_name: hello-world
+team_name: fellurian
+port: 8080
+healthcheck_url: /_internal_/ping
+
+logs:
+  - file: /var/log/messages
+    group_name: api-trolley-syslog
+    datetime_format: '%Y-%m-%d %H:%M:%S'
+  - file: /var/log/api-trolley/application.log
+    group_name: api-trolley-application
+    datetime_format: '%Y-%m-%d %H:%M:%S'
+
+environments:
+  - name: production
+    aws_profile: aws-ade
+    aws_region: us-east-1
+    deploy_arn: arn:aws:iam::123782165517:role/CodeDeployServiceRole
+    deployment_bucket: fellurian-nova-deployments
+    deployment_application_id: adfff
+    stacks:
+      - stack_name: production
+        stack_type: production
+        stack_template: NovaAutoScalingStack
+        stack_template_version: '1.0'
+        stack_deploy_config: OneAtATime
+        deployment_options:
+          - --log-driver: syslog
+          - --net: host
+        deployment_variables:
+          - LAUNCH_ENVIRONMENT: production
+        deployment_volumes:
+          - /var/log/api-trolley: /opt/api-trolley/logs
+        deployment_group: api-trolley-ProductionDeploymentGroup-THP46ZV554CJ ????????????????
+        InstanceSecurityGroups: sg-9c610ee2
+        VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
+        MaxInstances: 4
+        FallbackKeyName: nova
+        DNS: hello-world-prod-us-east-1.api.fellurian.com
+        MinInstances: 2
+        ElbSecurityGroups: sg-b7610ec9
+        ScaleUpThreshold: "4000"
+        ScaleDownThreshold: "3000"
+        Ami: ami-58730e4e
+
+      - stack_name: canary
+        stack_type: live-canary
+        stack_template: NovaLiveCanaryStack
+        stack_template_version: '1.0'
+        stack_deploy_config: AllAtOnce
+        deployment_options:
+          - --log-driver: syslog
+          - --net: host
+        deployment_variables:
+          - LAUNCH_ENVIRONMENT: live-canary
+        deployment_volumes:
+          - /var/log/api-trolley: /opt/api-trolley/logs
+        deployment_group: api-trolley-CanaryDeploymentGroup-1TBUJDFZQ7Z7M ???????
+        InstanceSecurityGroups: sg-9c610ee2
+        VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
+        FallbackKeyName: nova
+        ElbSecurityGroups: sg-b7610ec9
+        LoadBalancer: { "Fn::GetAtt": [ "Production", "Outputs.LoadBalancer" ] }
+        Ami: ami-58730e4e
