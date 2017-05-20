@@ -31,7 +31,7 @@ environments:
           - LAUNCH_ENVIRONMENT: production
         deployment_volumes:
           - /var/log/api-trolley: /opt/api-trolley/logs
-        deployment_group: api-trolley-ProductionDeploymentGroup-THP46ZV554CJ ????????????????
+        deployment_group: hello-world-ProductionDeploymentGroup-1QU7B1V7HQZMT
         InstanceSecurityGroups: sg-9c610ee2
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         MaxInstances: 4
