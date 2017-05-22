@@ -11,8 +11,12 @@ object HealthCheck {
 
   val service = HttpService {
     case GET -> Root / "_internal_" / "ping" => {
-      log.info(s"Received 'ping'")
+      log.info(s"GET '_internal_/ping'")
       Ok(jSingleObject("message", jString("pong")))
+    }
+    case HEAD -> Root / "_internal_" / "ping" => {
+      log.info(s"HEAD '_internal_/ping'")
+      Ok()
     }
   }
 }
