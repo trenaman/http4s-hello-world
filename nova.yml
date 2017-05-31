@@ -17,7 +17,7 @@ environments:
     aws_region: us-east-1
     deploy_arn: arn:aws:iam::123782165517:role/CodeDeployServiceRole
     deployment_bucket: fellurian-nova-deployments
-    deployment_application_id: hello-world-HelloWorldApplicationStack-ZDGIN89LVEFU
+    deployment_application_id: hello-world-HelloWorldApplicationStack-1CRA3S7NHZ4NP
     stacks:
       - stack_name: production
         stack_type: fleet
@@ -31,7 +31,7 @@ environments:
           - LAUNCH_ENVIRONMENT: production
         deployment_volumes:
           - /var/log/api-trolley: /opt/api-trolley/logs
-        deployment_group: hello-world-ProductionDeploymentGroup-C2YGAY39HRF6
+        deployment_group: hello-world-ProductionDeploymentGroup-19DDSSZ4LGGZN
         InstanceSecurityGroups: sg-9c610ee2
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         MaxInstances: 4
@@ -55,7 +55,7 @@ environments:
           - LAUNCH_ENVIRONMENT: live-canary
         deployment_volumes:
           - /var/log/api-trolley: /opt/api-trolley/logs
-        deployment_group: hello-world-CanaryDeploymentGroup-86YD82ZIYOIE
+        deployment_group: hello-world-CanaryDeploymentGroup-1Q83JKAMKKWAG
         InstanceSecurityGroups: sg-9c610ee2
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         FallbackKeyName: nova
