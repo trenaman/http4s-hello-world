@@ -17,10 +17,31 @@ environments:
     aws_region: us-east-1
     deploy_arn: arn:aws:iam::123782165517:role/CodeDeployServiceRole
     deployment_bucket: fellurian-nova-deployments
-    deployment_application_id: hello-world-HelloWorldApplicationStack-1CRA3S7NHZ4NP
+    deployment_application_id: hello-world-HelloWorldApplicationStack-34P8UXXHUZRK
     stacks:
-      - stack_name: production
-        stack_type: fleet
+      - stack_name: dark
+        stack_type: dark-canary
+        stack_template: NovaGeneralStack
+        stack_template_version: '1.0'
+        stack_deploy_config: AllAtOnce
+        deployment_options:
+          - --log-driver: syslog
+          - --net: host
+        deployment_variables:
+          - LAUNCH_ENVIRONMENT: dark-canary
+        deployment_volumes:
+          - /var/log/api-trolley: /opt/api-trolley/logs
+        deployment_group: hello-world-DarkDeploymentGroup-GD27YYL2A4H7
+        InstanceSecurityGroups: sg-0504117b,sg-3a645c44
+        VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
+        FallbackKeyName: nova
+        ElbSecurityGroups: sg-b7610ec9
+        DNS: hello-world-prod-us-east-1-dark.api.fellurian.com
+        Ami: ami-1588f003
+        InstanceType: t2.nano
+
+      - stack_name: fleet
+        stack_type: production
         stack_template: NovaAutoScalingStack
         stack_template_version: '1.0'
         stack_deploy_config: OneAtATime
@@ -31,8 +52,8 @@ environments:
           - LAUNCH_ENVIRONMENT: production
         deployment_volumes:
           - /var/log/api-trolley: /opt/api-trolley/logs
-        deployment_group: hello-world-ProductionDeploymentGroup-19DDSSZ4LGGZN
-        InstanceSecurityGroups: sg-9c610ee2
+        deployment_group: hello-world-FleetDeploymentGroup-1VW61508XH58P
+        InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         MaxInstances: 4
         FallbackKeyName: nova
@@ -41,7 +62,8 @@ environments:
         ElbSecurityGroups: sg-b7610ec9
         ScaleUpThreshold: "4000"
         ScaleDownThreshold: "3000"
-        Ami: ami-58730e4e
+        Ami: ami-1588f003
+        InstanceType: t2.nano
 
       - stack_name: canary
         stack_type: live-canary
@@ -55,10 +77,17 @@ environments:
           - LAUNCH_ENVIRONMENT: live-canary
         deployment_volumes:
           - /var/log/api-trolley: /opt/api-trolley/logs
-        deployment_group: hello-world-CanaryDeploymentGroup-1Q83JKAMKKWAG
-        InstanceSecurityGroups: sg-9c610ee2
+        deployment_group: hello-world-CanaryDeploymentGroup-1PXNUYMT6204N
+        InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         FallbackKeyName: nova
         ElbSecurityGroups: sg-b7610ec9
-        LoadBalancer: { "Fn::GetAtt": [ "Production", "Outputs.LoadBalancer" ] }
-        Ami: ami-58730e4e
+        LoadBalancer: { "Fn::GetAtt": [ "Fleet", "Outputs.LoadBalancer" ] }
+        Ami: ami-1588f003
+        InstanceType: t2.nano
+
+
+
+
+
+
