@@ -5,11 +5,11 @@ healthcheck_url: /_internal_/ping
 
 logs:
   - file: /var/log/messages
-    group_name: api-trolley-syslog
+    group_name: hello-world-syslog
     datetime_format: '%Y-%m-%d %H:%M:%S'
-  - file: /var/log/api-trolley/application.log
-    group_name: api-trolley-application
-    datetime_format: '%Y-%m-%d %H:%M:%S'
+  - file: /var/log/hello-world/application.log
+    group_name: hello-world-application
+    datetime_format: '%Y-%m-%d %H:%M:%S,%f'
 
 environments:
   - name: production
@@ -30,7 +30,7 @@ environments:
         deployment_variables:
           - LAUNCH_ENVIRONMENT: dark-canary
         deployment_volumes:
-          - /var/log/api-trolley: /opt/api-trolley/logs
+          - /var/log/hello-world: /opt/hello-world/logs
         deployment_group: hello-world-DarkDeploymentGroup-GD27YYL2A4H7
         InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
@@ -51,7 +51,7 @@ environments:
         deployment_variables:
           - LAUNCH_ENVIRONMENT: production
         deployment_volumes:
-          - /var/log/api-trolley: /opt/api-trolley/logs
+          - /var/log/hello-world: /opt/hello-world/logs
         deployment_group: hello-world-FleetDeploymentGroup-1VW61508XH58P
         InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
@@ -76,7 +76,7 @@ environments:
         deployment_variables:
           - LAUNCH_ENVIRONMENT: live-canary
         deployment_volumes:
-          - /var/log/api-trolley: /opt/api-trolley/logs
+          - /var/log/hello-world: /opt/hello-world/logs
         deployment_group: hello-world-CanaryDeploymentGroup-1PXNUYMT6204N
         InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
