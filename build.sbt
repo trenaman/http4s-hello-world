@@ -14,6 +14,10 @@ libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"
 
 import ReleaseTransformations._
 
+defaultLinuxInstallLocation in Docker := "/opt/hello-world"
+
+bashScriptConfigLocation := Some("${app_home}/../conf/application.ini")
+
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,              // : ReleaseStep
   inquireVersions,                        // : ReleaseStep
