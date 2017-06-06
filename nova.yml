@@ -17,7 +17,7 @@ environments:
     aws_region: us-east-1
     deploy_arn: arn:aws:iam::123782165517:role/CodeDeployServiceRole
     deployment_bucket: fellurian-nova-deployments
-    deployment_application_id: hello-world-HelloWorldApplicationStack-34P8UXXHUZRK
+    deployment_application_id: hello-world-HelloWorldApplicationStack-U2JOW534HQTX
     stacks:
       - stack_name: dark
         stack_type: dark-canary
@@ -31,7 +31,7 @@ environments:
           - LAUNCH_ENVIRONMENT: dark-canary
         deployment_volumes:
           - /var/log/hello-world: /opt/hello-world/logs
-        deployment_group: hello-world-DarkDeploymentGroup-GD27YYL2A4H7
+        deployment_group: hello-world-DarkDeploymentGroup-XLOYM482CJQD
         InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         FallbackKeyName: nova
@@ -52,7 +52,7 @@ environments:
           - LAUNCH_ENVIRONMENT: production
         deployment_volumes:
           - /var/log/hello-world: /opt/hello-world/logs
-        deployment_group: hello-world-FleetDeploymentGroup-1VW61508XH58P
+        deployment_group: hello-world-FleetDeploymentGroup-1KTHRIJOT24TS
         InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         MaxInstances: 4
@@ -77,7 +77,7 @@ environments:
           - LAUNCH_ENVIRONMENT: live-canary
         deployment_volumes:
           - /var/log/hello-world: /opt/hello-world/logs
-        deployment_group: hello-world-CanaryDeploymentGroup-1PXNUYMT6204N
+        deployment_group: hello-world-CanaryDeploymentGroup-UI9XICZIF9TG
         InstanceSecurityGroups: sg-0504117b,sg-3a645c44
         VpcSubnetIds: subnet-974fd4aa,subnet-b6b6749c,subnet-5118cf09,subnet-bb11accd
         FallbackKeyName: nova
@@ -85,9 +85,5 @@ environments:
         LoadBalancer: { "Fn::GetAtt": [ "Fleet", "Outputs.LoadBalancer" ] }
         Ami: ami-1588f003
         InstanceType: t2.nano
-
-
-
-
 
 
