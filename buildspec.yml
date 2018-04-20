@@ -9,13 +9,12 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - sbt docker:publish
+      - sbt docker:publishLocal
       - echo Built image.
   post_build:
     commands:
