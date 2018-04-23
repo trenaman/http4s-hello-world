@@ -28,7 +28,7 @@ mappings in Universal ++= {
   } yield file -> s"/conf/$relativePath"
 }
 
-dockerRepository = "123782165517.dkr.ecr.us-east-1.amazonaws.com"
+dockerRepository := Some("123782165517.dkr.ecr.us-east-1.amazonaws.com")
 
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,              // : ReleaseStep

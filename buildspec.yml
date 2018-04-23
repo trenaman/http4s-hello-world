@@ -14,11 +14,10 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - sbt docker:publishLocal
+      - sbt docker:compile 
       - echo Built image.
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - echo AWS_ACCOUNT_ID = $AWS_ACCOUNT_ID, IMAGE_REPO_NAME = $IMAGE_REPO_NAME, $IMAGE_TAG = IMAGE_TAG
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - sbt docker:publish 
