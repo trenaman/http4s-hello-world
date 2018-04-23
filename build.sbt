@@ -1,5 +1,5 @@
 organization := "com.fellurian"
-name := "hello-world"
+name := "http4s-hello-world"
 scalaVersion := "2.12.1"
 
 enablePlugins(JavaAppPackaging)
